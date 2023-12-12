@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script   pt src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js" >
+
+    </script>
+    <button id="join">
+        say hi to web socket
+    </button>
+    <button id="send-message">
+        say hello
+    </button>
+
+    <script type="text/javascript">
+        let connected = false
+        let socket 
+
+        document.getElementById("join").addEventListener("click", () => {
+            console.log("socket connected")
+            if(connected) return 
+
+            socket = new io("http://localhost:3333")
+
+            socket.on("received", data => {
+                console.log("received data", JSON.stringify(data))
+            })
+            connected = true
+
+        })
+
+        document.getElementById("send-message").addEventListener("click", () => {
+            if( !socket ) return 
+
+            socket.emit('message', `hello word ${Math.random()}`)
+            
+        })
+
+        
+
+    </script>
+</body>
+
+
+</html>
